@@ -163,7 +163,7 @@ ifneq ($(ROMFS),)
 	export _3DSXFLAGS += --romfs=$(CURDIR)/$(ROMFS)
 endif
 
-.PHONY: all clean
+.PHONY: all clean cia
 
 #---------------------------------------------------------------------------------
 all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
@@ -187,13 +187,24 @@ clean:
 	@echo clean ...
 	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf $(GFXBUILD)
 
+
+ifneq ($(OS),Windows_NT)
+UNAME_S := $(shell uname -s)
+endif
+
 cia:
 	@echo "If this fails, run make with no parameters first."
-	@./bannertool.exe makebanner -i banner.png -a banner.wav -o banner.bnr
-	@./bannertool.exe makesmdh -s $(APP_TITLE) -l $(APP_DESCRIPTION) -p $(APP_AUTHOR) -i icon.png -o icon.icn
-	@./makerom.exe -f cia -o $(TARGET).cia -DAPP_ENCRYPTED=false -rsf app.rsf -target t -exefslogo -elf $(TARGET).elf -icon icon.icn -banner banner.bnr
+ifeq ($(OS),Windows_NT)
+	@./cia-builder/ciabuilder.bat
+else
+ifeq ($(UNAME_S),Linux)
+	@cd ./cia-builder && sh ./ciabuilder.sh
+endif
+ifeq ($(UNAME_S),Darwin)
+	@cd ./cia-builder && sh ./ciabuilder.sh
+endif
+endif
 	@echo "Built $(TARGET).cia"
-
 
 #---------------------------------------------------------------------------------
 $(GFXBUILD)/%.t3x	$(BUILD)/%.h	:	%.t3s

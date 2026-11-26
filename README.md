@@ -9,7 +9,7 @@ A Nintendo 3DS eShop remake built with libctru.
 [Join our Discord!](http://googtendo.org/discord)
 
 
-[![](https://dcbadge.limes.pink/api/server/DNu7wJjcs7)](http://googtendo.org/discord)
+[![](https://dcbadge.limes.pink/api/server/yxYYhcCGjV)](http://googtendo.org/discord)
 
 <img alt="gitleaks badge" src="https://img.shields.io/badge/protected%20by-gitleaks-blue">
 
@@ -49,7 +49,7 @@ sudo dkp-pacman -S 3ds-dev 3ds-opusfile 3ds-curl 3ds-mbedtls 3ds-zlib 3ds-bzip2 
 Depending on your platform, you may not need sudo or dkp-.
 Then, run the following commands:
 ```bash
-git clone https://github.com/Unitendo/reShop/
+git clone https://github.com/googtendo/reShop/
 cd reShop
 make
 ```

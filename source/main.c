@@ -20,9 +20,6 @@
 
 u32 bw;
 
-
-
-
 typedef struct {
     char *name;
     char *url;
@@ -49,10 +46,7 @@ float velX = 0.0f;
 bool touched = false;
 float lastTouchX = 0.0f;
 
-
 volatile bool downloadDone = false;
-
-
 
 typedef struct {
     char* data;
@@ -167,23 +161,6 @@ cleanup:
     return success;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #define SAMPLE_RATE 48000
 #define CHANNELS 2
 #define BUFFER_MS 120
@@ -246,15 +223,6 @@ void playSFX(int16_t* samples, u32 nsamples) {
 }
 
 int16_t* loadOpusToPCM(const char* path, u32* sampleCount);
-
-
-
-
-
-
-
-
-
 
 bool isTitleInstalled(u64 titleId, FS_MediaType mediaType) {
     u32 titleCount = 0;
@@ -340,29 +308,11 @@ bool isSpriteTapped(C2D_Sprite* sprite, float scaleX, float scaleY) {
     return false;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 int scene = 1;
 
 C2D_SpriteSheet spriteSheet;
 C2D_Sprite logo;
 C2D_Sprite loadingbags;
-
-
-
-
 
 char *content;
 
@@ -402,19 +352,8 @@ char* readFileToBuffer(const char* filePath, u32* outSize) {
     return buffer;
 }
 
-
-
-
-
-
 C2D_TextBuf sbuffer;
 C2D_Text stext;
-
-
-
-
-
-
 
 void DrawText(char *text, float x, float y, int z, float scaleX, float scaleY, u32 color, bool wordwrap) {
 //    if (!sbuffer) {return;}
@@ -431,9 +370,6 @@ void DrawText(char *text, float x, float y, int z, float scaleX, float scaleY, u
     }
 }
 
-
-
-
 void createDirectoryRecursive(const char* path) {
     char temp[256];
     snprintf(temp, sizeof(temp), "%s", path);
@@ -449,34 +385,7 @@ void createDirectoryRecursive(const char* path) {
     if (temp[0]) mkdir(temp, 0777);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void downloadThreadFunc(void* arg);
-
-
 
 // Thread function
 void downloadThreadFunc(void* arg) {
@@ -504,42 +413,6 @@ Thread startDownload(const char* url, const char* path) {
     }
     return thread;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 int main() {
 	fsInit();
@@ -592,9 +465,6 @@ int main() {
 //    sfx1 = loadOpusToPCM("romfs:/button.opus", &sfx1_samples);
 
 	int loadingcounter = 0;
-
-
-
 
 //    u32 *soc_buffer = memalign(0x1000, 0x100000);
 //    if (!soc_buffer) {
@@ -660,36 +530,11 @@ int main() {
 
     bool iscia = false;
     
-
-
-
-
-
     while (aptMainLoop()) {
         hidScanInput();
         C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-
-
-
-
-
-
-
-
-
-
-
-
-
         C2D_TargetClear(top, C2D_Color32(239, 219, 164, 255));
         C2D_TargetClear(bottom, C2D_Color32(239, 219, 164, 255));
-
-
-
-
-
-
-
 
         u64 currentTime = osGetTime();
         frameCount++;
@@ -700,26 +545,13 @@ int main() {
             lastTime = currentTime; // Reset timer
         }
 
-
-
-
         sprintf(fpsText, "FPS: %.0f", fps);
         C2D_SceneBegin(top);
         DrawText(fpsText, 0.0f, 0.0f, 0, 0.5f, 0.5f, C2D_Color32(255, 0, 0, 255), false);
 
-
-
-
-
-
         if (!hidKeysHeld()) {
             justpressedflag = 0;
         }
-
-
-
-
-
 
         C2D_SceneBegin(top);
 
@@ -992,12 +824,6 @@ int main() {
             }
         }
 
-
-
-
-
-
-
         if (scene == 3) {
             if (!datagrabbed) {
                 descscroll = 0.0f;
@@ -1040,14 +866,8 @@ int main() {
                 }
             }
 
-
-
-
             C2D_SceneBegin(bottom);
             DrawText("Press B to leave.", 0.0f, 220.0f, 0, 0.5f, 0.5f, C2D_Color32(255, 0, 0, 255), false);
-
-
-
         }
 
 
@@ -1057,11 +877,6 @@ int main() {
 
 
         Result burger;
-
-
-
-
-
 
         if (scene == 4) {
             C2D_SceneBegin(top);
@@ -1133,20 +948,7 @@ int main() {
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
         svcSleepThread(1000000L);
-
 
         C3D_FrameEnd(0);
         if (hidKeysDown() & KEY_START) break;
